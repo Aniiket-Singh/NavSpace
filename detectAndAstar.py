@@ -31,9 +31,10 @@ def loadImages (path):
 def findArucoMarkers(img, markerSize = 6, totalMarkers = 250, draw = True):
 
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    arucoDict = aruco.Dictionary_get(aruco.DICT_6X6_250)
-    arucoParam = aruco.DetectorParameters_create()
-    bboxs, ids, _ = aruco.detectMarkers(imgGray, arucoDict, parameters = arucoParam)
+    arucoDict = aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+    arucoParam = aruco.DetectorParameters()
+    detector = aruco.ArucoDetector(arucoDict, arucoParam)
+    bboxs, ids, _ = detector.detectMarkers(imgGray)
 
     # print(ids)
     if draw:
